@@ -29,54 +29,54 @@ codehorn:
   compilerServices:
     cExecution:
       name: c-execution-service
-      image: irsathkareem/codehorn:1.0-c-execution-service
+      image: irsathkareem/codehorn:1.0-c-execution
       replicas: 1
       inputBasePath: /codehorn/executions/c
     cppExecution:
       name: cpp-execution-service
-      image: irsathkareem/codehorn:1.0-cpp-execution-service
+      image: irsathkareem/codehorn:1.0-cpp-execution
       replicas: 1
       inputBasePath: /codehorn/executions/cpp
     javaExecution:
       name: java-execution-service
-      image: irsathkareem/codehorn:1.0-java-execution-service
+      image: irsathkareem/codehorn:1.0-java-execution
       replicas: 1
       inputBasePath: /codehorn/executions/java
     pythonExecution:
       name: python-execution-service
-      image: irsathkareem/codehorn:1.0-python-execution-service
+      image: irsathkareem/codehorn:1.0-python-execution
       replicas: 1
       inputBasePath: /codehorn/executions/python
     javascriptExecution:
       name: javascript-execution-service
-      image: irsathkareem/codehorn:1.0-javascript-execution-service
+      image: irsathkareem/codehorn:1.0-javascript-execution
       replicas: 1
       inputBasePath: /codehorn/executions/javascript
 
   services:
     gateway:
       name: gateway-service
-      image: irsathkareem/codehorn:1.0-gateway-service
+      image: irsathkareem/codehorn:1.0-gateway
       replicas: 1
     problems:
       name: problems-service
-      image: irsathkareem/codehorn:1.0-problems-service
+      image: irsathkareem/codehorn:1.0-problems
       replicas: 1
     evaluation:
       name: evaluation-service
-      image: irsathkareem/codehorn:1.0-evaluation-service
+      image: irsathkareem/codehorn:1.0-evaluation
       replicas: 1
     practice:
       name: practice-service
-      image: irsathkareem/codehorn:1.0-practice-service
+      image: irsathkareem/codehorn:1.0-practice
       replicas: 1
     dailyChallenge:
       name: daily-challenge-service
-      image: irsathkareem/codehorn:1.0-daily-challenge-service
+      image: irsathkareem/codehorn:1.0-daily-challenge
       replicas: 1
     contests:
       name: contests-service
-      image: irsathkareem/codehorn:1.0-contests-service
+      image: irsathkareem/codehorn:1.0-contests
       replicas: 1
 
   helpers:
