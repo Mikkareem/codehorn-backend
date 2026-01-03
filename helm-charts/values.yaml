@@ -32,26 +32,31 @@ codehorn:
       image: irsathkareem/codehorn:1.0-c-execution
       replicas: 1
       inputBasePath: /codehorn/executions/c
+      subPath: c
     cppExecution:
       name: cpp-execution-service
       image: irsathkareem/codehorn:1.0-cpp-execution
       replicas: 1
       inputBasePath: /codehorn/executions/cpp
+      subPath: cpp
     javaExecution:
       name: java-execution-service
       image: irsathkareem/codehorn:1.0-java-execution
       replicas: 1
       inputBasePath: /codehorn/executions/java
+      subPath: java
     pythonExecution:
       name: python-execution-service
       image: irsathkareem/codehorn:1.0-python-execution
       replicas: 1
       inputBasePath: /codehorn/executions/python
+      subPath: python
     javascriptExecution:
       name: javascript-execution-service
       image: irsathkareem/codehorn:1.0-javascript-execution
       replicas: 1
       inputBasePath: /codehorn/executions/javascript
+      subPath: javascript
 
   services:
     gateway:

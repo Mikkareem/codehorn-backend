@@ -29,6 +29,7 @@ spec:
           volumeMounts:
             - name: docker-volume
               mountPath: {{ $svc.inputBasePath }}
+              subPath: {{ $svc.subPath }}
 
           ports:
             - containerPort: 80
