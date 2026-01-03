@@ -17,7 +17,7 @@ jobs:
       - name: Build All Microservices
         run: |
           chmod +x gradlew
-          gradlew build -x test
+          ./gradlew build -x test
 
   docker-images:
     needs:
