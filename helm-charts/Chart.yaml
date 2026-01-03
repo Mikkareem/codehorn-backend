@@ -1,6 +1,6 @@
 apiVersion: v2
-name: .
-description: A Helm chart for Kubernetes
+name: codehorn
+description: A Helm chart for Codehorn in Kubernetes
 
 # A chart can be either an 'application' or a 'library' chart.
 #

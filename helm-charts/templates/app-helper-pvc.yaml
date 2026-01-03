@@ -1,6 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
+  namespace: {{ .Values.namespace }}
   name: {{ .Values.codehorn.pvc.name }}
 spec:
   resources:

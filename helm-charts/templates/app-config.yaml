@@ -1,6 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
+  namespace: {{ .Values.namespace }}
   name: {{ .Values.codehorn.configs.compiler.name }}
 data:
   CODEHORN_C_COMPILER: {{ .Values.codehorn.compilers.c.compilerImage | quote }}
@@ -12,6 +13,7 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
+  namespace: {{ .Values.namespace }}
   name: {{ .Values.codehorn.configs.serviceDiscovery.name }}
 data:
   CODEHORN_GATEWAY_SERVICE: {{ .Values.codehorn.services.gateway.name | quote }}
