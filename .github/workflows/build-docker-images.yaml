@@ -1,3 +1,5 @@
+name: Build and Deploy Docker images
+
 on:
   workflow_dispatch:
 
@@ -29,6 +31,22 @@ jobs:
     needs:
       - build
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        service:
+          - gateway
+          - problems
+          - practice
+          - contests
+          - daily-challenge
+          - evaluation
+          - c-execution
+          - cpp-execution
+          - java-execution
+          - python-execution
+          - javascript-execution
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -41,49 +59,16 @@ jobs:
       - name: Setup docker
         uses: docker/setup-docker-action@v4
 
-      - name: Dockerize gateway-service
+      - name: Dockerize ${{ matrix.service }}
         run: |
-          docker build . -t irsathkareem/codehorn:1.0-gateway -f dockerfiles/gateway.Dockerfile
+          docker build . -t irsathkareem/codehorn:1.0-${{ matrix.service }} -f dockerfiles/${{ matrix.service }}.Dockerfile
 
-      - name: Dockerize problems-service
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Docker push ${{ matrix.service }}
         run: |
-          docker build . -t irsathkareem/codehorn:1.0-problems -f dockerfiles/problems.Dockerfile
-
-      - name: Dockerize practice-service
-        run: |
-          docker build . -t irsathkareem/codehorn:1.0-practice -f dockerfiles/practice.Dockerfile
-
-      - name: Dockerize contests-service
-        run: |
-          docker build . -t irsathkareem/codehorn:1.0-contests -f dockerfiles/contests.Dockerfile
-
-      - name: Dockerize daily-challenge-service
-        run: |
-          docker build . -t irsathkareem/codehorn:1.0-daily-challenge -f dockerfiles/daily-challenge.Dockerfile
-
-      - name: Dockerize evaluation-service
-        run: |
-          docker build . -t irsathkareem/codehorn:1.0-evaluation -f dockerfiles/evaluation.Dockerfile
-
-      - name: Dockerize c-execution-service
-        run: |
-          docker build . -t irsathkareem/codehorn:1.0-c-execution -f dockerfiles/c-execution.Dockerfile
-
-      - name: Dockerize cpp-execution-service
-        run: |
-          docker build . -t irsathkareem/codehorn:1.0-cpp-execution -f dockerfiles/cpp-execution.Dockerfile
-
-      - name: Dockerize java-execution-service
-        run: |
-          docker build . -t irsathkareem/codehorn:1.0-java-execution -f dockerfiles/java-execution.Dockerfile
-
-      - name: Dockerize python-execution-service
-        run: |
-          docker build . -t irsathkareem/codehorn:1.0-python-execution -f dockerfiles/python-execution.Dockerfile
-
-      - name: Dockerize javascript-execution-service
-        run: |
-          docker build . -t irsathkareem/codehorn:1.0-javascript-execution -f dockerfiles/javascript-execution.Dockerfile
-
-      - name: Verify Docker images
-        run: docker images
+          docker push irsathkareem/codehorn:1.0-${{ matrix.service }}
