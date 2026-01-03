@@ -1,0 +1,31 @@
+services:
+  c-execution-service:
+    container_name: c-execution-service
+    build:
+      context: ../
+      dockerfile: dockerfiles/c-execution.Dockerfile
+    depends_on:
+#      #Short Syntax (Array)
+#      #Default Condition: service_started
+#      - docker-daemon
+#      #Long Syntax (Object)
+      docker-daemon:
+        condition: service_healthy
+    environment:
+      - DOCKER_HOST=tcp://docker-daemon:2375
+      - CODEHORN_C_COMPILER=gcc:9.5.0
+      - CODEHORN_CPP_COMPILER=gcc:9.5.0
+      - CODEHORN_JAVA_COMPILER=amazoncorretto:21
+      - CODEHORN_PYTHON_COMPILER=gcc:9.5.0
+      - CODEHORN_JAVASCRIPT_COMPILER=node:21
+      - CODEHORN_GATEWAY_SERVICE=gateway-service
+      - CODEHORN_PROBLEMS_SERVICE=problems-service
+      - CODEHORN_EVALUATION_SERVICE=evaluation-service
+      - CODEHORN_DAILY_CHALLENGE_SERVICE=daily-challenge-service
+      - CODEHORN_CONTESTS_SERVICE=contests-service
+      - CODEHORN_PRACTICE_SERVICE=practice-service
+      - CODEHORN_C_EXECUTION_SERVICE=c-execution-service
+      - CODEHORN_CPP_EXECUTION_SERVICE=cpp-execution-service
+      - CODEHORN_JAVA_EXECUTION_SERVICE=java-execution-service
+      - CODEHORN_PYTHON_EXECUTION_SERVICE=python-execution-service
+      - CODEHORN_JAVASCRIPT_EXECUTION_SERVICE=javascript-execution-service

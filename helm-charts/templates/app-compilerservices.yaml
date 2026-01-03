@@ -1,0 +1,59 @@
+{{- range $svcKey, $svc := .Values.codehorn.compilerServices }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $svc.name }}
+  labels:
+    app: {{ $svc.name }}
+    chart: {{ $.Chart.Name }}
+spec:
+  replicas: {{ $svc.replicas | default 1 }}
+  selector:
+    matchLabels:
+      app: {{ $svc.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ $svc.name }}
+    spec:
+      volumes:
+        - name: docker-volume
+          persistentVolumeClaim:
+            claimName: {{ $.Values.codehorn.pvc.name }}
+
+      containers:
+        - name: {{ $svc.name }}
+          image: {{ $svc.image }}
+          imagePullPolicy: IfNotPresent
+
+          volumeMounts:
+            - name: docker-volume
+              mountPath: {{ $svc.inputBasePath }}
+
+          ports:
+            - containerPort: 80
+
+          envFrom:
+            - configMapRef:
+                name: {{ $.Values.codehorn.configs.compiler.name }}
+            - configMapRef:
+                name: {{ $.Values.codehorn.configs.serviceDiscovery.name }}
+
+          env:
+            - name: DOCKER_HOST
+              value: tcp://{{ $.Values.codehorn.helpers.dockerDaemon.name }}
+            - name: CODEHORN_EXECUTION_BASE_PATH
+              value: {{ $svc.inputBasePath }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $svc.name }}
+spec:
+  selector:
+    app: {{ $svc.name }}
+  ports:
+    - port: 80
+      targetPort: 80
+---
+{{- end }}

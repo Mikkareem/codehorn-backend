@@ -1,0 +1,27 @@
+[versions]
+kotlin = "2.3.0"
+springBoot = "4.0.1"
+springDepsMgmt = "1.1.7"
+springCloud = "2025.1.0"
+
+[libraries]
+boot-starter = { module = "org.springframework.boot:spring-boot-starter" }
+boot-starter-webmvc = { module = "org.springframework.boot:spring-boot-starter-webmvc" }
+boot-starter-webmvc-test = { module = "org.springframework.boot:spring-boot-starter-webmvc-test" }
+boot-starter-restclient = { module = "org.springframework.boot:spring-boot-starter-restclient" }
+boot-starter-restclient-test = { module = "org.springframework.boot:spring-boot-starter-restclient-test" }
+
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect" }
+kotlin-test-junit5 = { module = "org.jetbrains.kotlin:kotlin-test-junit5" }
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher" }
+jackson-module-kotlin = { module = "tools.jackson.module:jackson-module-kotlin" }
+
+spring-cloud-dependencies = { module = "org.springframework.cloud:spring-cloud-dependencies", version.ref = "springCloud" }
+
+[plugins]
+java-library = { id = "java-library" }
+kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-jpa = { id = "org.jetbrains.kotlin.plugin.jpa", version.ref = "kotlin" }
+spring-boot = { id = "org.springframework.boot", version.ref = "springBoot" }
+spring-deps-mgmt = { id = "io.spring.dependency-management", version.ref = "springDepsMgmt" }

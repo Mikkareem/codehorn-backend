@@ -1,0 +1,23 @@
+# Ignore everything
+**
+
+# Re-include specific directories / files
+# Such that
+# COPY . . -----> Includes only these files
+!gateway-service/**
+!problems-service/**
+!practice-service/**
+!daily-challenge-service/**
+!contests-service/**
+!evaluation-service/**
+!c-execution-service/**
+!cpp-execution-service/**
+!java-execution-service/**
+!python-execution-service/**
+!javascript-execution-service/**
+!common/**
+!common-code-execution/**
+!gradle/**
+!settings.gradle.kts
+!build.gradle.kts
+!gradlew

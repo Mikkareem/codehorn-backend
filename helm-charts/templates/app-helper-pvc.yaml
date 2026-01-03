@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.codehorn.pvc.name }}
+spec:
+  resources:
+    requests:
+      storage: {{ .Values.codehorn.pvc.storage }}
+  storageClassName: {{ .Values.codehorn.pvc.storageClass }}
+  accessModes:
+    - ReadWriteMany
+---

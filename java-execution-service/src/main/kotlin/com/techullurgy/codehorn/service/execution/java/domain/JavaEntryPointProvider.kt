@@ -1,0 +1,17 @@
+package com.techullurgy.codehorn.service.execution.java.domain
+
+import com.techullurgy.codehorn.common.code.execution.providers.EntryPointProvider
+import com.techullurgy.codehorn.common.code.execution.providers.TestcaseProvider
+import com.techullurgy.codehorn.common.code.execution.utils.Compiler
+import org.springframework.beans.factory.config.ConfigurableBeanFactory
+import org.springframework.context.annotation.Scope
+import org.springframework.stereotype.Component
+
+@Component
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+class JavaEntryPointProvider(
+    testcaseProvider: TestcaseProvider
+): EntryPointProvider(testcaseProvider) {
+    override fun runCommand(): String = "java ${Compiler.JAVA_INPUT_FILE_NAME.replace(".java", "")}"
+    override fun compileCommand(): String = "javac -nowarn ${Compiler.JAVA_INPUT_FILE_NAME}"
+}

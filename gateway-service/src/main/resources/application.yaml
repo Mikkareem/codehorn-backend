@@ -1,0 +1,12 @@
+server:
+  port: 8080
+
+service:
+  problems:
+    baseUrl: http://problems-service/
+  practice:
+    baseUrl: http://practice-service/
+  daily-challenge:
+    baseUrl: http://daily-challenge-service/
+  contests:
+    baseUrl: http://contests-service/

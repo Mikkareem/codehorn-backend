@@ -1,0 +1,14 @@
+include:
+  - docker-composes/gateway-compose.yaml
+  - docker-composes/problems-compose.yaml
+  - docker-composes/practice-compose.yaml
+  - docker-composes/contests-compose.yaml
+  - docker-composes/daily-challenge-compose.yaml
+  - docker-composes/evaluation-compose.yaml
+  - docker-composes/c-execution-compose.yaml
+  - docker-composes/cpp-execution-compose.yaml
+  - docker-composes/java-execution-compose.yaml
+  - docker-composes/python-execution-compose.yaml
+  - docker-composes/javascript-execution-compose.yaml
+
+  - docker-composes/helpers/docker-dind-compose.yaml
