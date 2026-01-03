@@ -9,6 +9,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '25'
+
       - name: Change Distribution Url of Gradle
         env:
           NEW_DISTRIBUTION_URL: https\://services.gradle.org/distributions/gradle-9.1.0-bin.zip
