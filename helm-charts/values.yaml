@@ -16,47 +16,62 @@ codehorn:
 
   compilers:
     c:
+      name: c-compiler
       compilerImage: "gcc:9.5.0"
+      replicas: 1
+      inputBasePath: c
     cpp:
+      name: cpp-compiler
       compilerImage: "gcc:9.5.0"
+      replicas: 1
+      inputBasePath: cpp
     java:
+      name: java-compiler
       compilerImage: "amazoncorretto:21"
+      replicas: 1
+      inputBasePath: java
     python:
+      name: python-compiler
       compilerImage: "gcc:9.5.0"
+      replicas: 1
+      inputBasePath: python
     javascript:
+      name: javascript-compiler
       compilerImage: "node:21"
+      replicas: 1
+      inputBasePath: javascript
 
   compilerServices:
     cExecution:
       name: c-execution-service
       image: irsathkareem/codehorn:1.0-c-execution
       replicas: 1
-      inputBasePath: /codehorn/executions/c
-      subPath: c
+      inputBasePath: c
+      daemon: c-compiler
     cppExecution:
       name: cpp-execution-service
       image: irsathkareem/codehorn:1.0-cpp-execution
       replicas: 1
-      inputBasePath: /codehorn/executions/cpp
-      subPath: cpp
+      inputBasePath: cpp
+      daemon: cpp-compiler
     javaExecution:
       name: java-execution-service
       image: irsathkareem/codehorn:1.0-java-execution
       replicas: 1
-      inputBasePath: /codehorn/executions/java
-      subPath: java
+      inputBasePath: java
+      daemon: java-compiler
     pythonExecution:
       name: python-execution-service
       image: irsathkareem/codehorn:1.0-python-execution
       replicas: 1
-      inputBasePath: /codehorn/executions/python
-      subPath: python
+      inputBasePath: python
+      daemon: python-compiler
     javascriptExecution:
       name: javascript-execution-service
       image: irsathkareem/codehorn:1.0-javascript-execution
       replicas: 1
-      inputBasePath: /codehorn/executions/javascript
-      subPath: javascript
+      inputBasePath: javascript
+      daemon: javascript-compiler
 
   services:
     gateway:
@@ -86,7 +101,5 @@ codehorn:
 
   helpers:
     dockerDaemon:
-      name: docker-daemon
       image: docker:dind
-      replicas: 1
       volumeMountBasePath: /codehorn/executions

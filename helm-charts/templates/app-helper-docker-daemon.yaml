@@ -1,35 +1,36 @@
+{{- range $svcKey, $svc := .Values.codehorn.compilers }}
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  namespace: {{ .Values.namespace }}
-  name: {{ .Values.codehorn.helpers.dockerDaemon.name }}
+  namespace: {{ $.Values.namespace }}
+  name: {{ $svc.name }}
   labels:
-    app: {{ .Values.codehorn.helpers.dockerDaemon.name }}
+    app: {{ $svc.name }}
 spec:
-  replicas: {{ .Values.codehorn.helpers.dockerDaemon.replicas | default 1 }}
+  replicas: {{ $svc.replicas | default 1 }}
   selector:
     matchLabels:
-      app: {{ .Values.codehorn.helpers.dockerDaemon.name }}
+      app: {{ $svc.name }}
   template:
     metadata:
       labels:
-        app: {{ .Values.codehorn.helpers.dockerDaemon.name }}
+        app: {{ $svc.name }}
     spec:
       volumes:
         - name: docker-volume
           persistentVolumeClaim:
-            claimName: {{ .Values.codehorn.pvc.name }}
+            claimName: {{ $.Values.codehorn.pvc.name }}
 
       containers:
-        - name: {{ .Values.codehorn.helpers.dockerDaemon.name }}
-          image: {{ .Values.codehorn.helpers.dockerDaemon.image }}
+        - name: {{ $svc.name }}
+          image: {{ $.Values.codehorn.helpers.dockerDaemon.image }}
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
 
           volumeMounts:
             - name: docker-volume
-              mountPath: {{ .Values.codehorn.helpers.dockerDaemon.volumeMountBasePath }}
+              mountPath: "{{ $.Values.codehorn.helpers.dockerDaemon.volumeMountBasePath }}/{{ $svc.inputBasePath }}"
 
           ports:
             - containerPort: 2375
@@ -43,17 +44,59 @@ spec:
           command:
             - dockerd
             - --host=tcp://0.0.0.0:2375
+
+          readinessProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - docker image inspect {{ $svc.compilerImage }} > /dev/null 2>&1
+            initialDelaySeconds: 3
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 1
+
+        - name: image-puller
+          image: docker:cli
+          imagePullPolicy: IfNotPresent
+
+          command:
+            - sh
+            - -c
+            - |
+              echo 'STARTED'
+              export DOCKER_HOST=tcp://localhost:2375
+              # wait until docker daemon is really ready
+              until docker info > /dev/null 2>&1; do
+                sleep 2
+              done
+
+              echo "PULLING {{ $svc.compilerImage }}"
+              # one-time image pulls
+              docker pull {{ $svc.compilerImage }} || exit 1
+              echo "PULLED {{ $svc.compilerImage }}"
+
+              # keep running and watch docker health
+              while true; do
+                if ! docker info > /dev/null 2>&1; then
+                  echo "Docker daemon unhealthy, exiting to restart pod"
+                  exit 1
+                fi
+                sleep 5
+              done
+              echo 'STOPPED'
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: {{ .Values.namespace }}
-  name: {{ .Values.codehorn.helpers.dockerDaemon.name }}
+  namespace: {{ $.Values.namespace }}
+  name: {{ $svc.name }}
 spec:
   clusterIp: None
   selector:
-    app: {{ .Values.codehorn.helpers.dockerDaemon.name }}
+    app: {{ $svc.name }}
   ports:
     - port: 80
       targetPort: 2375
 ---
+{{- end }}

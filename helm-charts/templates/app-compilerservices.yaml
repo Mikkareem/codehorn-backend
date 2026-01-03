@@ -28,8 +28,7 @@ spec:
 
           volumeMounts:
             - name: docker-volume
-              mountPath: {{ $svc.inputBasePath }}
-              subPath: {{ $svc.subPath }}
+              mountPath: "{{ $.Values.codehorn.helpers.dockerDaemon.volumeMountBasePath }}/{{ $svc.inputBasePath }}"
 
           ports:
             - containerPort: 80
@@ -42,9 +41,9 @@ spec:
 
           env:
             - name: DOCKER_HOST
-              value: tcp://{{ $.Values.codehorn.helpers.dockerDaemon.name }}
+              value: tcp://{{ $svc.daemon }}:80
             - name: CODEHORN_EXECUTION_BASE_PATH
-              value: {{ $svc.inputBasePath }}
+              value: "{{ $.Values.codehorn.helpers.dockerDaemon.volumeMountBasePath }}/{{ $svc.inputBasePath }}"
 ---
 apiVersion: v1
 kind: Service
