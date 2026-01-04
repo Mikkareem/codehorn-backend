@@ -4,11 +4,11 @@ metadata:
   namespace: {{ .Values.namespace }}
   name: {{ .Values.codehorn.configs.compiler.name }}
 data:
-  CODEHORN_C_COMPILER: {{ .Values.codehorn.compilers.c.compilerImage | quote }}
-  CODEHORN_CPP_COMPILER: {{ .Values.codehorn.compilers.cpp.compilerImage | quote }}
-  CODEHORN_JAVA_COMPILER: {{ .Values.codehorn.compilers.java.compilerImage | quote }}
-  CODEHORN_PYTHON_COMPILER: {{ .Values.codehorn.compilers.python.compilerImage | quote }}
-  CODEHORN_JAVASCRIPT_COMPILER: {{ .Values.codehorn.compilers.javascript.compilerImage | quote }}
+{{/*  CODEHORN_C_COMPILER: {{ .Values.codehorn.compilers.c.compilerImage | quote }}*/}}
+{{/*  CODEHORN_CPP_COMPILER: {{ .Values.codehorn.compilers.cpp.compilerImage | quote }}*/}}
+{{/*  CODEHORN_JAVA_COMPILER: {{ .Values.codehorn.compilers.java.compilerImage | quote }}*/}}
+{{/*  CODEHORN_PYTHON_COMPILER: {{ .Values.codehorn.compilers.python.compilerImage | quote }}*/}}
+{{/*  CODEHORN_JAVASCRIPT_COMPILER: {{ .Values.codehorn.compilers.javascript.compilerImage | quote }}*/}}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -16,15 +16,15 @@ metadata:
   namespace: {{ .Values.namespace }}
   name: {{ .Values.codehorn.configs.serviceDiscovery.name }}
 data:
-  CODEHORN_GATEWAY_SERVICE: {{ .Values.codehorn.services.gateway.name | quote }}
-  CODEHORN_PROBLEMS_SERVICE: {{ .Values.codehorn.services.problems.name | quote }}
-  CODEHORN_EVALUATION_SERVICE: {{ .Values.codehorn.services.evaluation.name | quote }}
-  CODEHORN_DAILY_CHALLENGE_SERVICE: {{ .Values.codehorn.services.dailyChallenge.name | quote }}
-  CODEHORN_CONTESTS_SERVICE: {{ .Values.codehorn.services.contests.name | quote }}
-  CODEHORN_PRACTICE_SERVICE: {{ .Values.codehorn.services.practice.name | quote }}
-  CODEHORN_C_EXECUTION_SERVICE: {{ .Values.codehorn.compilerServices.cExecution.name | quote }}
-  CODEHORN_CPP_EXECUTION_SERVICE: {{ .Values.codehorn.compilerServices.cppExecution.name | quote }}
-  CODEHORN_JAVA_EXECUTION_SERVICE: {{ .Values.codehorn.compilerServices.javaExecution.name | quote }}
-  CODEHORN_PYTHON_EXECUTION_SERVICE: {{ .Values.codehorn.compilerServices.pythonExecution.name | quote }}
-  CODEHORN_JAVASCRIPT_EXECUTION_SERVICE: {{ .Values.codehorn.compilerServices.javascriptExecution.name | quote }}
+{{/*  CODEHORN_GATEWAY_SERVICE: {{ .Values.codehorn.services.gateway.name | quote }}*/}}
+{{/*  CODEHORN_PROBLEMS_SERVICE: {{ .Values.codehorn.services.problems.name | quote }}*/}}
+{{/*  CODEHORN_EVALUATION_SERVICE: {{ .Values.codehorn.services.evaluation.name | quote }}*/}}
+{{/*  CODEHORN_DAILY_CHALLENGE_SERVICE: {{ .Values.codehorn.services.dailyChallenge.name | quote }}*/}}
+{{/*  CODEHORN_CONTESTS_SERVICE: {{ .Values.codehorn.services.contests.name | quote }}*/}}
+{{/*  CODEHORN_PRACTICE_SERVICE: {{ .Values.codehorn.services.practice.name | quote }}*/}}
+{{/*  CODEHORN_C_EXECUTION_SERVICE: {{ .Values.codehorn.compilerServices.cExecution.name | quote }}*/}}
+{{/*  CODEHORN_CPP_EXECUTION_SERVICE: {{ .Values.codehorn.compilerServices.cppExecution.name | quote }}*/}}
+{{/*  CODEHORN_JAVA_EXECUTION_SERVICE: {{ .Values.codehorn.compilerServices.javaExecution.name | quote }}*/}}
+{{/*  CODEHORN_PYTHON_EXECUTION_SERVICE: {{ .Values.codehorn.compilerServices.pythonExecution.name | quote }}*/}}
+{{/*  CODEHORN_JAVASCRIPT_EXECUTION_SERVICE: {{ .Values.codehorn.compilerServices.javascriptExecution.name | quote }}*/}}
 ---

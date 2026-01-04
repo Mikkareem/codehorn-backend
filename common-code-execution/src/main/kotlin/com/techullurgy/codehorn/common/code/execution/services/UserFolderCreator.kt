@@ -9,15 +9,10 @@ import org.springframework.stereotype.Component
 import java.io.Closeable
 import java.io.File
 
-@Component
-@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 class UserFolderCreator(
     executionId: String,
+    volumeMountPathProvider: ObjectProvider<VolumeMountPathProvider>
 ): Closeable {
-
-    @Autowired
-    private lateinit var volumeMountPathProvider: ObjectProvider<VolumeMountPathProvider>
-
     val folder = File(
         volumeMountPathProvider.getObject(executionId).provideSourceVolumeMountPath(),
     ).apply { mkdirs() }

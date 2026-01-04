@@ -1,8 +1,7 @@
-server:
-  port: 8080
-
 codehorn:
   java:
     execution:
       base:
-        path: temp/java
+        path:
+          source: ${CODEHORN_SOURCE_BASEPATH:temp/java}
+          destination: ${CODEHORN_DESTINATION_BASEPATH:/tmp/java}

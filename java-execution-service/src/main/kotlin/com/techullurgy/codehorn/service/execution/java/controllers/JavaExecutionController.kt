@@ -1,5 +1,6 @@
 package com.techullurgy.codehorn.service.execution.java.controllers
 
+import com.techullurgy.codehorn.common.code.execution.providers.VolumeMountPathProvider
 import com.techullurgy.codehorn.common.code.execution.services.CodeExecutionService
 import com.techullurgy.codehorn.common.code.execution.services.UserFolderCreator
 import com.techullurgy.codehorn.common.models.ParsedTestcase
@@ -20,15 +21,19 @@ data class CodeExecutionRequest(
 @RestController
 class JavaExecutionController(
     private val codeExecutionServiceProvider: ObjectProvider<CodeExecutionService>,
-    private val userFolderCreatorProvider: ObjectProvider<UserFolderCreator>,
+    private val volumeMountPathProvider: ObjectProvider<VolumeMountPathProvider>,
 ) {
     @PostMapping
     fun executeCode(
         @RequestBody request: CodeExecutionRequest
     ): List<TestcaseResult> {
-        val testcaseResults = userFolderCreatorProvider.getObject(request.executionId).use {
+        val testcaseResults = UserFolderCreator(
+            executionId = request.executionId,
+            volumeMountPathProvider = volumeMountPathProvider
+        ).use {
             codeExecutionServiceProvider.getObject(request.executionId).run {
                 executeFor(
+                    executionId = request.executionId,
                     it.folder,
                     request.executableCode.toReadableString(),
                     request.parsedTestcases,

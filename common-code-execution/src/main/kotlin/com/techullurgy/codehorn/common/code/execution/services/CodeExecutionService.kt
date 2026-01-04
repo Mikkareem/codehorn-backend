@@ -17,10 +17,7 @@ import org.springframework.stereotype.Component
 import java.io.File
 
 @Component
-@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-class CodeExecutionService(
-    private val executionId: String
-) {
+class CodeExecutionService {
     @Autowired private lateinit var createEntryPointFileUseCase: CreateEntryPointFileUseCase
     @Autowired private lateinit var createDockerFileUseCase: CreateDockerFileUseCase
     @Autowired private lateinit var buildDockerImageUseCase: BuildDockerImageUseCase
@@ -31,6 +28,7 @@ class CodeExecutionService(
     @Autowired private lateinit var generateTestcaseResultsUseCase: GenerateTestcaseResultsUseCase
 
     fun executeFor(
+        executionId: String,
         folder: File,
         fileContent: String,
         testcases: List<ParsedTestcase>,

@@ -42,7 +42,9 @@ spec:
           env:
             - name: DOCKER_HOST
               value: tcp://{{ $svc.daemon }}:80
-            - name: CODEHORN_EXECUTION_BASE_PATH
+            - name: CODEHORN_SOURCE_BASEPATH
+              value: "{{ $.Values.codehorn.helpers.dockerDaemon.volumeMountBasePath }}/{{ $svc.inputBasePath }}"
+            - name: CODEHORN_DESTINATION_BASEPATH
               value: "{{ $.Values.codehorn.helpers.dockerDaemon.volumeMountBasePath }}/{{ $svc.inputBasePath }}"
 ---
 apiVersion: v1
