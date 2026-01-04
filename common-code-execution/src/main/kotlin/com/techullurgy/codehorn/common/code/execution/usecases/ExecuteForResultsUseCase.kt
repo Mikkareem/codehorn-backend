@@ -3,12 +3,15 @@ package com.techullurgy.codehorn.common.code.execution.usecases
 import com.techullurgy.codehorn.common.code.execution.utils.Compiler
 import com.techullurgy.codehorn.common.models.CodeSubmissionResult
 import com.techullurgy.codehorn.common.models.ParsedTestcase
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 
 @Component
 class ExecuteForResultsUseCase(
     private val executeDockerImage: ExecuteDockerImageUseCase
 ) {
+    private val logger = LoggerFactory.getLogger(ExecuteForResultsUseCase::class.java)
+
     operator fun invoke(
         executionId: String,
         testcases: List<ParsedTestcase>,
@@ -24,9 +27,11 @@ class ExecuteForResultsUseCase(
         }.toMutableMap()
 
         if(!isImageAvailable) {
+            logger.info("No image $imageName")
             return results
         }
 
+        logger.info("Executing image $imageName")
         val outputs = executeDockerImage(executionId, imageName)
 
         if(outputs.contains("COMPILATION_ERROR")) {

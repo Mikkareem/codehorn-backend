@@ -22,6 +22,6 @@ class UserFolderCreator(
     }
 
     override fun close() {
-        folder.deleteRecursively()
+//        folder.deleteRecursively()
     }
 }
