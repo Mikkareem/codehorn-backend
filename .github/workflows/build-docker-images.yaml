@@ -4,48 +4,48 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Java
-        uses: actions/setup-java@v5
-        with:
-          distribution: 'temurin'
-          java-version: '25'
-
-      - name: Change Distribution Url of Gradle
-        env:
-          NEW_DISTRIBUTION_URL: https\://services.gradle.org/distributions/gradle-9.1.0-bin.zip
-        run: sed -i "s|^distributionUrl=.*|distributionUrl=$NEW_DISTRIBUTION_URL|" gradle/wrapper/gradle-wrapper.properties
-
-      - name: Build All Microservices
-        run: |
-          chmod +x gradlew
-          ./gradlew build -x test
+#  build:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v4
+#
+#      - name: Setup Java
+#        uses: actions/setup-java@v5
+#        with:
+#          distribution: 'temurin'
+#          java-version: '25'
+#
+#      - name: Change Distribution Url of Gradle
+#        env:
+#          NEW_DISTRIBUTION_URL: https\://services.gradle.org/distributions/gradle-9.1.0-bin.zip
+#        run: sed -i "s|^distributionUrl=.*|distributionUrl=$NEW_DISTRIBUTION_URL|" gradle/wrapper/gradle-wrapper.properties
+#
+#      - name: Build All Microservices
+#        run: |
+#          chmod +x gradlew
+#          ./gradlew build -x test
 
   docker-images:
-    needs:
-      - build
+#    needs:
+#      - build
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
         service:
-          - gateway
-          - problems
-          - practice
-          - contests
-          - daily-challenge
-          - evaluation
-          - c-execution
-          - cpp-execution
+#          - gateway
+#          - problems
+#          - practice
+#          - contests
+#          - daily-challenge
+#          - evaluation
+#          - c-execution
+#          - cpp-execution
           - java-execution
-          - python-execution
-          - javascript-execution
+#          - python-execution
+#          - javascript-execution
 
     steps:
       - name: Checkout code

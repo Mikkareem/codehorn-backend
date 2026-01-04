@@ -1,7 +1,7 @@
 package com.techullurgy.codehorn.common.models
 
 data class TestcaseResult(
-    val testcase: ProblemTestcase,
+    val testcaseId: String,
     val expectedResult: String,
     val yourResult: String,
     val stdout: String,

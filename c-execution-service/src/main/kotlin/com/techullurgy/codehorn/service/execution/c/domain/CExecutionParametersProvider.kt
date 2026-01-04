@@ -7,6 +7,5 @@ import org.springframework.stereotype.Component
 @Component
 class CExecutionParametersProvider: ExecutionParametersProvider {
     override val codeFileName: String = Compiler.C_INPUT_FILE_NAME
-    override val language: String = "c"
     override val compiler: String = Compiler.FROM_DOCKER_IMAGE_FOR_C_COMPILER
 }

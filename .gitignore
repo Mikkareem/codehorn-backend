@@ -4,3 +4,4 @@ build
 .gradle
 local-start-app.sh
 local-stop-app.sh
+*.txt

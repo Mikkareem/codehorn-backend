@@ -9,6 +9,7 @@ plugins {
 }
 
 dependencies {
+    implementation(project(":common"))
     implementation(project(":common-code-execution"))
 
     implementation(libs.boot.starter.webmvc)

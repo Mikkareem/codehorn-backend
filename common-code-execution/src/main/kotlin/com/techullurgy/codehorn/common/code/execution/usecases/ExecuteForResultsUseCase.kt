@@ -2,7 +2,7 @@ package com.techullurgy.codehorn.common.code.execution.usecases
 
 import com.techullurgy.codehorn.common.code.execution.utils.Compiler
 import com.techullurgy.codehorn.common.models.CodeSubmissionResult
-import com.techullurgy.codehorn.common.models.ProblemTestcase
+import com.techullurgy.codehorn.common.models.ParsedTestcase
 import org.springframework.stereotype.Component
 
 @Component
@@ -10,12 +10,12 @@ class ExecuteForResultsUseCase(
     private val executeDockerImage: ExecuteDockerImageUseCase
 ) {
     operator fun invoke(
-        submissionId: String,
-        testcases: List<ProblemTestcase>,
+        executionId: String,
+        testcases: List<ParsedTestcase>,
         isImageAvailable: Boolean
     ): Map<String, CodeSubmissionResult> {
 
-        val imageName = "${Compiler.BASE_IMAGE_PREFIX}-$submissionId".lowercase()
+        val imageName = "${Compiler.BASE_IMAGE_PREFIX}-$executionId".lowercase()
 
         val results = buildMap {
             testcases.forEach {
@@ -27,7 +27,7 @@ class ExecuteForResultsUseCase(
             return results
         }
 
-        val outputs = executeDockerImage(submissionId, imageName)
+        val outputs = executeDockerImage(executionId, imageName)
 
         if(outputs.contains("COMPILATION_ERROR")) {
             results.forEach {

@@ -1,2 +1,8 @@
 server:
   port: 8080
+
+codehorn:
+  java:
+    execution:
+      base:
+        path: temp/java

@@ -8,7 +8,7 @@ import com.techullurgy.codehorn.common.code.execution.usecases.DeleteDockerImage
 import com.techullurgy.codehorn.common.code.execution.usecases.ExecuteForResultsUseCase
 import com.techullurgy.codehorn.common.code.execution.usecases.GenerateInputFileUseCase
 import com.techullurgy.codehorn.common.code.execution.usecases.GenerateTestcaseResultsUseCase
-import com.techullurgy.codehorn.common.models.ProblemTestcase
+import com.techullurgy.codehorn.common.models.ParsedTestcase
 import com.techullurgy.codehorn.common.models.TestcaseResult
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.config.ConfigurableBeanFactory
@@ -19,7 +19,7 @@ import java.io.File
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 class CodeExecutionService(
-    private val submissionId: String
+    private val executionId: String
 ) {
     @Autowired private lateinit var createEntryPointFileUseCase: CreateEntryPointFileUseCase
     @Autowired private lateinit var createDockerFileUseCase: CreateDockerFileUseCase
@@ -33,22 +33,22 @@ class CodeExecutionService(
     fun executeFor(
         folder: File,
         fileContent: String,
-        testcases: List<ProblemTestcase>,
+        testcases: List<ParsedTestcase>,
     ): List<TestcaseResult> {
-        generateInputFileUseCase(submissionId, fileContent)
+        generateInputFileUseCase(folder.path, fileContent)
 
-        createNecessaryTestcaseFilesUseCase(submissionId, testcases)
+        createNecessaryTestcaseFilesUseCase(folder.path, testcases)
 
-        createEntryPointFileUseCase(submissionId, testcases)
+        createEntryPointFileUseCase(folder.path, testcases)
 
-        createDockerFileUseCase(submissionId)
+        createDockerFileUseCase(folder.path, executionId)
 
-        val isCreated = buildDockerImageUseCase(submissionId)
+        val isCreated = buildDockerImageUseCase(folder.path, executionId)
 
-        val results = executeForResults(submissionId, testcases, isCreated)
+        val results = executeForResults(executionId, testcases, isCreated)
 
         if(isCreated) {
-            deleteDockerImageUseCase(submissionId)
+            deleteDockerImageUseCase(executionId)
         }
 
         return generateTestcaseResultsUseCase(folder, testcases, results)

@@ -60,6 +60,7 @@ data:
       server_name  localhost;
 
       location / {
-          proxy_pass http://gateway-service;
+{{/*          proxy_pass http://gateway-service;*/}}
+          proxy_pass http://java-execution-service;
       }
     }

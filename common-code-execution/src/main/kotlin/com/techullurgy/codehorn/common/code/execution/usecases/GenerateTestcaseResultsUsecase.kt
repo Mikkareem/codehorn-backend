@@ -2,6 +2,7 @@ package com.techullurgy.codehorn.common.code.execution.usecases
 
 import com.techullurgy.codehorn.common.code.execution.services.FileService
 import com.techullurgy.codehorn.common.models.CodeSubmissionResult
+import com.techullurgy.codehorn.common.models.ParsedTestcase
 import com.techullurgy.codehorn.common.models.ProblemTestcase
 import com.techullurgy.codehorn.common.models.TestcaseResult
 import org.springframework.stereotype.Component
@@ -11,7 +12,7 @@ import java.io.File
 class GenerateTestcaseResultsUseCase {
     operator fun invoke(
         userFolder: File,
-        testcases: List<ProblemTestcase>,
+        testcases: List<ParsedTestcase>,
         results: Map<String, CodeSubmissionResult>
     ): List<TestcaseResult> {
         return results.map {
@@ -46,7 +47,7 @@ class GenerateTestcaseResultsUseCase {
             } else ""
 
             TestcaseResult(
-                testcase = currentTestcase,
+                testcaseId = currentTestcase.id,
                 expectedResult = expectedResult,
                 yourResult = yourResult,
                 stdout = stdout,
