@@ -25,6 +25,7 @@ spec:
         - name: {{ $svc.name }}
           image: {{ $svc.image }}
 {{/*          imagePullPolicy: IfNotPresent*/}}
+          imagePullPolicy: Always
 
           volumeMounts:
             - name: docker-volume

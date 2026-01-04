@@ -6,6 +6,7 @@ import com.techullurgy.codehorn.common.code.execution.utils.outputs
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import java.util.concurrent.TimeUnit
+import kotlin.system.measureTimeMillis
 
 @Component
 class BuildDockerImageUseCase {
@@ -19,18 +20,17 @@ class BuildDockerImageUseCase {
 
         val builder = ProcessBuilder("docker", "build", "-t", imageName, userFolderPath)
         val process = builder.start()
-        val isNotAborted = process.waitFor(10, TimeUnit.SECONDS)
 
-        return if (isNotAborted) {
-            if (process.exitValue() == 0) {
-                logger.info("Docker image $imageName created successfully")
-                true
-            } else {
-                logger.error(process.errors())
-                false
-            }
+        val startTime = System.currentTimeMillis()
+        val exitCode = process.waitFor()
+        val endTime = System.currentTimeMillis()
+
+        logger.info("Building docker image $imageName takes ${endTime - startTime} ms")
+
+        return if (exitCode == 0) {
+            logger.info("Docker image $imageName created successfully")
+            true
         } else {
-            logger.info("Docker image $imageName taking long time")
             logger.info("Build logs: {}", process.outputs())
             logger.info("Build errors: {}", process.errors())
             false
