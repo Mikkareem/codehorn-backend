@@ -1,6 +1,9 @@
 name: Build and Deploy Docker images
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
