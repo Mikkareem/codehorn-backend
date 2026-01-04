@@ -6,7 +6,7 @@ metadata:
 data:
 {{/*  CODEHORN_C_COMPILER: {{ .Values.codehorn.compilers.c.compilerImage | quote }}*/}}
 {{/*  CODEHORN_CPP_COMPILER: {{ .Values.codehorn.compilers.cpp.compilerImage | quote }}*/}}
-{{/*  CODEHORN_JAVA_COMPILER: {{ .Values.codehorn.compilers.java.compilerImage | quote }}*/}}
+  CODEHORN_JAVA_COMPILER: {{ .Values.codehorn.compilers.java.compilerImage | quote }}
 {{/*  CODEHORN_PYTHON_COMPILER: {{ .Values.codehorn.compilers.python.compilerImage | quote }}*/}}
 {{/*  CODEHORN_JAVASCRIPT_COMPILER: {{ .Values.codehorn.compilers.javascript.compilerImage | quote }}*/}}
 ---
